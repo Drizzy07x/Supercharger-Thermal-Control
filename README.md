@@ -1,5 +1,7 @@
 # Supercharger Thermal Control
 
+Stable release: **v1.0**
+
 Official thermal mode addon for **Supercharger Pixel 9 Pro Series**.
 
 Choose how your Pixel 9 handles heat and performance with a clean WebUI and simple profile switching.

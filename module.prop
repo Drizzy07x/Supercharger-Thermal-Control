@@ -1,6 +1,6 @@
 id=supercharger_thermal_control
 name=Supercharger Thermal Control
-version=3.6.2
-versionCode=362
+version=v1.0
+versionCode=100
 author=Drizzy_07
-description=Official thermal mode addon for Supercharger Pixel 9 Pro Series. Fixes state reading in WebUI and keeps profile state aligned.
+description=Official thermal mode addon for Supercharger Pixel 9 Pro Series. Stable v1.0 release with clearer profile separation and reliable state alignment.
