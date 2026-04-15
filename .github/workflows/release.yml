@@ -1,0 +1,91 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Validate tag against module.prop
+        run: |
+          set -euo pipefail
+          set -x
+
+          TAG="${GITHUB_REF_NAME}"
+          MODULE_VERSION="$(sed -n 's/^version=//p' module.prop | head -n1)"
+
+          if [[ -z "${MODULE_VERSION}" ]]; then
+            echo "Failed to read version from module.prop" >&2
+            exit 1
+          fi
+
+          if [[ "${TAG}" != "${MODULE_VERSION}" ]]; then
+            echo "Tag mismatch: pushed tag '${TAG}' does not match module.prop version '${MODULE_VERSION}'" >&2
+            exit 1
+          fi
+
+          echo "TAG=${TAG}" >> "${GITHUB_ENV}"
+
+      - name: Build release artifacts
+        run: |
+          set -euo pipefail
+          set -x
+
+          mkdir -p dist
+
+          ZIP_NAME="Supercharger_Thermal_Control-${TAG}.zip"
+          ZIP_PATH="dist/${ZIP_NAME}"
+          SHA_PATH="${ZIP_PATH}.sha256"
+
+          rm -f "${ZIP_PATH}" "${SHA_PATH}"
+
+          zip -r "${ZIP_PATH}" . \
+            -x ".git/*" \
+            -x ".git/**" \
+            -x ".github/*" \
+            -x ".github/**" \
+            -x "dist/*" \
+            -x "dist/**" \
+            -x "action.log" \
+            -x "current_profile" \
+            -x "last_action_status.txt" \
+            -x "*.DS_Store" \
+            -x "*.swp" \
+            -x "*.tmp"
+
+          sha256sum "${ZIP_PATH}" > "${SHA_PATH}"
+
+          unzip -l "${ZIP_PATH}" | sed -n '1,200p'
+          ls -lh "${ZIP_PATH}" "${SHA_PATH}"
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          set -x
+
+          ZIP_PATH="dist/Supercharger_Thermal_Control-${TAG}.zip"
+          SHA_PATH="${ZIP_PATH}.sha256"
+
+          gh release create "${TAG}" \
+            "${ZIP_PATH}" \
+            "${SHA_PATH}" \
+            --verify-tag \
+            --generate-notes \
+            --title "Supercharger Thermal Control ${TAG}"
