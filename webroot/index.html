@@ -217,7 +217,7 @@ function updateButtons(){
 async function refresh(){
   setBusy(true);
   try {
-    const out = await sh(`MODDIR=${state.modDir}; export MODDIR; . "$MODDIR/bin/profile_lib.sh"; read_profile`);
+    const out = await sh(`MODDIR=${state.modDir}; export MODDIR; . "$MODDIR/bin/profile_lib.sh"; profile="$(read_profile)"; log_webui_state_read success "$profile"; printf '%s' "$profile"`);
     state.current = (out.trim() || 'balanced');
     state.needsReboot = false;
     updateButtons();
@@ -228,6 +228,9 @@ async function refresh(){
       {text:'You only need to restart after switching modes', cls:'statusMuted'}
     ]);
   } catch(e){
+    try {
+      await sh(`MODDIR=${state.modDir}; export MODDIR; . "$MODDIR/bin/profile_lib.sh"; log_webui_state_read failure "" "refresh failed"`);
+    } catch (_) {}
     state.current = 'balanced';
     state.needsReboot = false;
     updateButtons();
@@ -246,7 +249,7 @@ async function applyProfile(profile){
   setBusy(true);
   setStatus([{text:`Switching to ${labelFor(profile)}…`, cls:'statusWarn'}]);
   try {
-    const out = await sh(`sh ${state.modDir}/bin/switch_profile.sh ${profile}`);
+    await sh(`sh ${state.modDir}/bin/switch_profile.sh ${profile}`);
     state.current = profile;
     state.needsReboot = true;
     updateButtons();

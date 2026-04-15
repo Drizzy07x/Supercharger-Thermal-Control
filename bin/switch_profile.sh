@@ -4,6 +4,7 @@ MODDIR=${MODDIR:-${0%/*}/..}
 TARGET="$1"
 CURRENT="$(read_profile)"
 [ -n "$TARGET" ] || TARGET="$CURRENT"
+log_info "switch_profile invoked: previous=$CURRENT target=$TARGET"
 if apply_profile_files "$TARGET"; then
   echo "Previous profile: $CURRENT"
   echo "Selected profile: $TARGET"
@@ -11,6 +12,7 @@ if apply_profile_files "$TARGET"; then
   echo "Reboot required to apply overlay."
   exit 0
 else
+  log_error "switch_profile failed: previous=$CURRENT target=$TARGET"
   echo "Previous profile: $CURRENT"
   echo "Requested profile: $TARGET"
   echo "Status: failure"
