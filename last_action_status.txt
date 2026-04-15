@@ -1,0 +1,3 @@
+Current profile: Balanced
+Status: ready
+Restart is only needed after you switch modes.
