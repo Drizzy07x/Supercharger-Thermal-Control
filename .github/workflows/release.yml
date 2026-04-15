@@ -82,10 +82,21 @@ jobs:
 
           ZIP_PATH="dist/Supercharger_Thermal_Control-${TAG}.zip"
           SHA_PATH="${ZIP_PATH}.sha256"
+          RELEASE_TITLE="Supercharger Thermal Control ${TAG}"
 
-          gh release create "${TAG}" \
-            "${ZIP_PATH}" \
-            "${SHA_PATH}" \
-            --verify-tag \
-            --generate-notes \
-            --title "Supercharger Thermal Control ${TAG}"
+          if gh release view "${TAG}" >/dev/null 2>&1; then
+            gh release edit "${TAG}" \
+              --title "${RELEASE_TITLE}"
+
+            gh release upload "${TAG}" \
+              "${ZIP_PATH}" \
+              "${SHA_PATH}" \
+              --clobber
+          else
+            gh release create "${TAG}" \
+              "${ZIP_PATH}" \
+              "${SHA_PATH}" \
+              --verify-tag \
+              --generate-notes \
+              --title "${RELEASE_TITLE}"
+          fi
