@@ -1,5 +1,11 @@
 # Supercharger Thermal Control
 
+[![Device](https://img.shields.io/badge/Device-Pixel%209%20Series-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://github.com/Drizzy07x/Supercharger-Thermal-Control)
+[![SoC](https://img.shields.io/badge/SoC-Tensor%20G4-F29900?style=for-the-badge)](https://github.com/Drizzy07x/Supercharger-Thermal-Control)
+[![Version](https://img.shields.io/badge/Version-v1.0%20STABLE-34A853?style=for-the-badge)](https://github.com/Drizzy07x/Supercharger-Thermal-Control/releases)
+[![Android](https://img.shields.io/badge/Android-16%20QPR3%20%26%2017-3DDC84?style=for-the-badge&logo=android&logoColor=white)](https://github.com/Drizzy07x/Supercharger-Thermal-Control)
+[![Root](https://img.shields.io/badge/Root-Magisk%20%2F%20KernelSU-EA4335?style=for-the-badge)](https://github.com/Drizzy07x/Supercharger-Thermal-Control)
+
 Stable release: **v1.0**
 
 Official thermal mode addon for **Supercharger Pixel 9 Pro Series**.
