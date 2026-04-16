@@ -55,6 +55,16 @@ It gives you a simple way to switch between thermal profiles depending on how yo
 - Best compatibility is expected on stock-based Pixel 9 builds
 - Compatibility may vary on custom ROMs with different thermal frameworks
 - This addon is meant to complement the main Supercharger module, not replace it
+  
+---
+
+## ☕ Support the Project
+
+If you like the project and want to support future development, testing, and refinement, you can help here:
+
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Donate-yellow?style=for-the-badge&logo=buy-me-a-coffee)](https://www.buymeacoffee.com/Drizzy_07)
+
+---
 
 ## Credits
 
